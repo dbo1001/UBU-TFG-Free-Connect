@@ -1,67 +1,110 @@
 #include "Arduino.h"
 #include "Thing.h"
 #include "WebThingAdapter.h"
+#include "QuickSortLib.h"
 
 const char *ssid = "delgado";
 const char *password = "micasa221b";
 
-const int ledPin = 2; // manually configure LED pin
+const int ledPin = 2;
+const int shumedad = 33;
+const int activarH = 18;
 
+boolean sonado = false;
+
+boolean verboseOn = false;
+boolean banderaRegar=false;
+int limRegar=3700;
+const int autoComp=3600000; //1h
+long tComprobacion=-autoComp;
 WebThingAdapter *adapter;
 
-const char *ledTypes[] = {"OnOffSwitch", "Led", nullptr};
-ThingDevice led("led", "Built-in LED", ledTypes);
-ThingProperty ledOn("on", "", BOOLEAN, "OnOffProperty");
-
-bool lastOn = false;
+const char *capacidades[] = {"MultiLevelSensor", nullptr};
+ThingDevice Sensor("humedad1", "tierra", capacidades);
+ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
+ThingEvent Regar("regar","Es necesario regar",BOOLEAN, "AlarmEvent");
 
 void setup(void) {
   pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, HIGH);
   Serial.begin(115200);
-  Serial.println("");
-  Serial.print("Connecting to \"");
-  Serial.print(ssid);
-  Serial.println("\"");
-
-  WiFi.begin(ssid, password);
-  Serial.println("");
-
-  // Wait for connection
-  bool blink = true;
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-    digitalWrite(ledPin, blink ? LOW : HIGH); // active low led
-    blink = !blink;
+  if(verboseOn){
+    Serial.begin(115200);
+  
+    // Attempt to connect to Wifi network:
+    Serial.print("Connecting Wifi: ");
+    Serial.println(ssid);
   }
-  digitalWrite(ledPin, HIGH); // active low led
+  // Set WiFi to station mode and disconnect from an AP if it was Previously
+  // connected
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
 
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  adapter = new WebThingAdapter("w25", WiFi.localIP());
-
-  led.addProperty(&ledOn);
-  adapter->addDevice(&led);
+  while (WiFi.status() != WL_CONNECTED) {
+    if(verboseOn)Serial.print(".");
+    delay(500);
+  }
+  pinMode(shumedad,INPUT);
+  pinMode(activarH,OUTPUT);
+  if(verboseOn){
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+  }
+  
+  adapter = new WebThingAdapter("Girasol", WiFi.localIP());
+  Sensor.addProperty(&Humedad);
+  Sensor.addEvent(&Regar);
+  adapter->addDevice(&Sensor);
   adapter->begin();
-  Serial.println("HTTP server started");
-  Serial.print("http://");
-  Serial.print(WiFi.localIP());
-  Serial.print("/things/");
-  Serial.println(led.id);
 }
 
 void loop(void) {
-  adapter->update();
-  bool on = ledOn.getValue().boolean;
-  digitalWrite(ledPin, on ? LOW : HIGH); // active low led
-  if (on != lastOn) {
-    Serial.print(led.id);
-    Serial.print(": ");
-    Serial.println(on);
+  if (millis()> tComprobacion + autoComp){
+    if(regar()){
+      if(!sonado){
+        ThingDataValue val;
+        val.boolean = true;
+        ThingEventObject *ev = new ThingEventObject("regar", BOOLEAN, val);
+        Sensor.queueEventObject(ev);
+      }
+      sonado=true;
+    }
+    tComprobacion=millis();
   }
-  lastOn = on;
+  adapter->update();
+}
+
+int leer(){
+  int siz=50;
+  int  lectura[siz];
+  digitalWrite(activarH,HIGH);
+  delay(500);
+  for(int i=0;i<siz;i++){
+    lectura[i]=analogRead(shumedad);
+    if(verboseOn)Serial.print(lectura[i]);
+    delay(10);
+  }
+  digitalWrite(activarH,LOW);
+  QuickSort<int>::SortAscending(lectura, 0, siz-1);
+  int media=0;
+  int conta=0;
+  for(int i =10;i<siz-10;i++){
+    media+=lectura[i];
+    conta++;
+  }
+  ThingPropertyValue nivel = {.integer = media/conta};
+  Humedad.setValue(nivel);
+  return media/conta;
+}
+
+boolean regar(){
+  if(leer()>limRegar){
+    if(banderaRegar){
+      banderaRegar=false;
+      return true;  
+    }
+    banderaRegar=true;
+  }
+  return false;
 }
