@@ -1,3 +1,14 @@
+/**
+ * Simple server compliant with Mozilla's proposed WoT API
+ * Originally based on the HelloServer example
+ * Tested on ESP8266, ESP32, Arduino boards with WINC1500 modules (shields or
+ * MKR1000)
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 #include <Arduino.h>
 #include "Thing.h"
 #include "WebThingAdapter.h"
@@ -5,6 +16,7 @@
 // TODO: Hardcode your wifi credentials here (and keep it private)
 const char *ssid = "delgado";
 const char *password = "micasa221b";
+
 
 const int ledPin = 13; // manually configure LED pin
 
@@ -24,6 +36,9 @@ void setup(void) {
   Serial.print("Connecting to \"");
   Serial.print(ssid);
   Serial.println("\"");
+#if defined(ESP8266) || defined(ESP32)
+  WiFi.mode(WIFI_STA);
+#endif
   WiFi.begin(ssid, password);
   Serial.println("");
 
