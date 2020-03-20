@@ -20,7 +20,7 @@ long tComprobacion=-autoComp;
 WebThingAdapter *adapter;
 
 const char *capacidades[] = {"MultiLevelSensor", nullptr};
-ThingDevice Sensor("humedad1", "tierra", capacidades);
+ThingDevice Sensor("humedad1", "girasol", capacidades);
 ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
 ThingEvent Regar("regar","Es necesario regar",BOOLEAN, "AlarmEvent");
 
@@ -65,6 +65,7 @@ void loop(void) {
       if(!sonado){
         ThingDataValue val;
         val.boolean = true;
+        if(verboseOn)Serial.println("evento regar");
         ThingEventObject *ev = new ThingEventObject("regar", BOOLEAN, val);
         Sensor.queueEventObject(ev);
       }
