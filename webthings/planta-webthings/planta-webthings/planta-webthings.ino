@@ -12,10 +12,10 @@ const int activarH = 18;
 
 boolean sonado = false;
 
-boolean verboseOn = false;
+boolean verboseOn = true;
 boolean banderaRegar=false;
 int limRegar=3700;
-const int autoComp=3600000; //1h
+const int autoComp=10000; //1h
 long tComprobacion=-autoComp;
 WebThingAdapter *adapter;
 
@@ -82,7 +82,6 @@ int leer(){
   delay(500);
   for(int i=0;i<siz;i++){
     lectura[i]=analogRead(shumedad);
-    if(verboseOn)Serial.print(lectura[i]);
     delay(10);
   }
   digitalWrite(activarH,LOW);
@@ -93,8 +92,10 @@ int leer(){
     media+=lectura[i];
     conta++;
   }
-  ThingPropertyValue nivel = {.integer = media/conta};
-  Humedad.setValue(nivel);
+  ThingPropertyValue value;
+  value.number = media/conta;
+  Humedad.setValue(value);
+  if(verboseOn)Serial.println(media/conta);
   return media/conta;
 }
 
