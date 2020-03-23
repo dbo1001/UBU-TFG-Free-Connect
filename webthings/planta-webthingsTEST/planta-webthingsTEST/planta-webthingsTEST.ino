@@ -23,6 +23,7 @@ const char *capacidades[] = {"MultiLevelSensor", nullptr};
 ThingDevice Sensor("humedad1", "girasol", capacidades);
 ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
 ThingEvent Regar("regar","Es necesario regar",BOOLEAN, "AlarmEvent");
+ThingEvent Overheated("overheated","The lamp has exceeded its safe operating temperature",NUMBER, "OverheatedEvent");
 
 void setup(void) {
   pinMode(ledPin, OUTPUT);
@@ -55,6 +56,7 @@ void setup(void) {
   adapter = new WebThingAdapter("Girasol", WiFi.localIP());
   Sensor.addProperty(&Humedad);
   Sensor.addEvent(&Regar);
+  Sensor.addEvent(&Overheated);
   adapter->addDevice(&Sensor);
   adapter->begin();
 }
@@ -63,10 +65,14 @@ void loop(void) {
   if (millis()> tComprobacion + autoComp){
     if(regar()){
       if(!sonado){
-        ThingDataValue val;
-        val.boolean = true;
+        //ThingDataValue val;
+        //val.boolean = true;
         if(verboseOn)Serial.println("evento regar");
-        ThingEventObject *ev = new ThingEventObject("regar", BOOLEAN, val);
+        //ThingEventObject *ev = new ThingEventObject("Regar", BOOLEAN, val);
+        //Sensor.queueEventObject(ev);
+        ThingDataValue val;
+        val.number = 102;
+        ThingEventObject *ev = new ThingEventObject("overheated", NUMBER, val);
         Sensor.queueEventObject(ev);
       }
       sonado=true;
@@ -82,7 +88,8 @@ int leer(){
   digitalWrite(activarH,HIGH);
   delay(500);
   for(int i=0;i<siz;i++){
-    lectura[i]=analogRead(shumedad);
+    //lectura[i]=analogRead(shumedad);
+    lectura[i]=3800;
     delay(10);
   }
   digitalWrite(activarH,LOW);
