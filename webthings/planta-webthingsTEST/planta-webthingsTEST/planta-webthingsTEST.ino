@@ -2,6 +2,7 @@
 #include "Thing.h"
 #include "WebThingAdapter.h"
 #include "QuickSortLib.h"
+#include <ArduinoOTA.h>
 
 const char *ssid = "delgado";
 const char *password = "micasa221b";
@@ -19,6 +20,8 @@ const int autoComp=10000; //1h
 long tComprobacion=-autoComp;
 WebThingAdapter *adapter;
 
+const char nombreOTA[]= "esp32pruebas";
+const char passOTA[]= "admin";
 const char *capacidades[] = {"MultiLevelSensor", nullptr};
 ThingDevice Sensor("humedad1", "girasol", capacidades);
 ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
@@ -30,7 +33,6 @@ void setup(void) {
   Serial.begin(115200);
   if(verboseOn){
     Serial.begin(115200);
-  
     // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
@@ -52,6 +54,28 @@ void setup(void) {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
   }
+  ArduinoOTA.setHostname(nombreOTA);
+  ArduinoOTA.setPassword(passOTA);
+  ArduinoOTA.onStart([]() {
+      String type;
+      if (ArduinoOTA.getCommand() == U_FLASH)
+        type = "sketch";
+      else // U_SPIFFS
+        type = "filesystem";
+      Serial.println("Start updating " + type);
+    }).onEnd([]() {
+      Serial.println("\nEnd");
+    }).onProgress([](unsigned int progress, unsigned int total) {
+      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    }).onError([](ota_error_t error) {
+      Serial.printf("Error[%u]: ", error);
+      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+      else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    });
+  ArduinoOTA.begin();
   
   adapter = new WebThingAdapter("Girasol", WiFi.localIP());
   Sensor.addProperty(&Humedad);
@@ -62,6 +86,7 @@ void setup(void) {
 }
 
 void loop(void) {
+  ArduinoOTA.handle();
   if (millis()> tComprobacion + autoComp){
     if(regar()){
       if(!sonado){
