@@ -32,7 +32,6 @@ void setup(void) {
   pinMode(ledPin, OUTPUT);
   Serial.begin(115200);
   if(verboseOn){
-    Serial.begin(115200);
     // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
@@ -114,7 +113,7 @@ int leer(){
   delay(500);
   for(int i=0;i<siz;i++){
     //lectura[i]=analogRead(shumedad);
-    lectura[i]=3800;
+    lectura[i]=3100;
     delay(10);
   }
   digitalWrite(activarH,LOW);
