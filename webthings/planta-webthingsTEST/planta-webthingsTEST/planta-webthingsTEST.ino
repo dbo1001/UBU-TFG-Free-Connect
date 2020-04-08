@@ -2,31 +2,14 @@
 #include "Thing.h"
 #include "WebThingAdapter.h"
 #include "QuickSortLib.h"
-#include <ArduinoOTA.h>
+#include "ArduinoOTA.h"
+#include "config.h"
+#include "funciones.h"
 
-const char *ssid = "delgado";
-const char *password = "micasa221b";
 
-const int ledPin = 2;
-const int shumedad = 33;
-const int activarH = 18;
 
-boolean sonado = false;
-
-boolean verboseOn = true;
-boolean banderaRegar=false;
-int limRegar=3700;
-const int autoComp=10000; //1h
-long tComprobacion=-autoComp;
 WebThingAdapter *adapter;
 
-const char nombreOTA[]= "esp32pruebas";
-const char passOTA[]= "admin";
-const char *capacidades[] = {"MultiLevelSensor", nullptr};
-ThingDevice Sensor("humedad1", "girasol", capacidades);
-ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
-ThingEvent Regar("regar","Es necesario regar",BOOLEAN, "AlarmEvent");
-ThingEvent Overheated("overheated","The lamp has exceeded its safe operating temperature",NUMBER, "OverheatedEvent");
 
 void setup(void) {
   pinMode(ledPin, OUTPUT);
@@ -104,40 +87,4 @@ void loop(void) {
     tComprobacion=millis();
   }
   adapter->update();
-}
-
-int leer(){
-  int siz=50;
-  int  lectura[siz];
-  digitalWrite(activarH,HIGH);
-  delay(500);
-  for(int i=0;i<siz;i++){
-    //lectura[i]=analogRead(shumedad);
-    lectura[i]=3100;
-    delay(10);
-  }
-  digitalWrite(activarH,LOW);
-  QuickSort<int>::SortAscending(lectura, 0, siz-1);
-  int media=0;
-  int conta=0;
-  for(int i =10;i<siz-10;i++){
-    media+=lectura[i];
-    conta++;
-  }
-  ThingPropertyValue value;
-  value.number = media/conta;
-  Humedad.setValue(value);
-  if(verboseOn)Serial.println(media/conta);
-  return media/conta;
-}
-
-boolean regar(){
-  if(leer()>limRegar){
-    if(banderaRegar){
-      banderaRegar=false;
-      return true;  
-    }
-    banderaRegar=true;
-  }
-  return false;
 }
