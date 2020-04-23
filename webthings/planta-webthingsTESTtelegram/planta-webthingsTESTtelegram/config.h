@@ -31,4 +31,5 @@ ThingEvent Overheated("overheated","The lamp has exceeded its safe operating tem
 
 #define bOTtoken "914632211:AAG1Oe1_9EkHIOqVMQnuoV0X_oWsRoA9FR8"
 const int numChats=1;
-const String chatID[numChats]={"191552774"};
+const char chatID[]={"191552774"};
+const char* chatIDs[numChats]={chatID};

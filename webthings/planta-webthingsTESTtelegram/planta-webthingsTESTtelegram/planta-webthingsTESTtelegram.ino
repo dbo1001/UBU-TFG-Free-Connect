@@ -3,16 +3,16 @@
 #include "WebThingAdapter.h"
 #include "QuickSortLib.h"
 #include "ArduinoOTA.h"
-#include "WiFiClientSecure.h"
-#include "UniversalTelegramBot.h"
+#include "utlgbotlib.h"
 #include "config.h"
 #include "funciones.h"
 
 WebThingAdapter *adapter;
 
-WiFiClientSecure client;
-UniversalTelegramBot Bot(bOTtoken, client);
-
+//WiFiClientSecure client;
+//UniversalTelegramBot Bot(bOTtoken, client);
+uTLGBot Bot(bOTtoken);
+const int debugLevelBot = 0;
 
 void setup(void) {
   pinMode(ledPin, OUTPUT);
@@ -62,9 +62,7 @@ void setup(void) {
       else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
   ArduinoOTA.begin();
-
-
-
+  
   //
   adapter = new WebThingAdapter("Girasol", WiFi.localIP());
   Sensor.addProperty(&Humedad);
@@ -74,6 +72,8 @@ void setup(void) {
   adapter->begin();
 
   //
+  Bot.set_debug(debugLevelBot);
+  Bot.getMe();
 }
 
 void loop(void) {
@@ -91,7 +91,7 @@ void loop(void) {
         ThingEventObject *ev = new ThingEventObject("overheated", NUMBER, val);
         Sensor.queueEventObject(ev);
         for (int i=0; i<numChats; i++) {
-          Bot.sendMessage(chatID[i], "necesario regar","");
+          Bot.sendMessage(chatIDs[i], "necesario regar");
         }
       }
       sonado=true;
