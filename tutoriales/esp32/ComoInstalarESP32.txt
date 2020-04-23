@@ -14,6 +14,6 @@ Ahora si nos aparece dentro de la lista de tarjetas posibles
 
 Durante el proceso de subida es frecuente encontrar errores en la comunicacion. Estos se originan porque a diferencia de otras placas arduino, el esp32 cuenta con un modo especial para la subida del código.
 
-La manera más efectiva de entrar en este modo e esperar al ultimo paso de la compilazión (activar menajes extendidos ehn ajustes) y resetearlo al modo upload, para ello, pulsamos y mantenemos el boton boot, presionamos el boton reset y soltamos boot. Es mas efectivo de esta forma porque el esp32 cuenta con mecanismos watchdog que podrian reiniciar la placa y que saliera del modo upload si activamos el modo un tiempo antes de la subida.
+La manera más efectiva de entrar en este modo e esperar al ultimo paso de la compilazión (activar menajes extendidos ehn ajustes) y resetearlo al modo upload, para ello, pulsamos y mantenemos el boton boot, presionamos el boton reset y soltamos boot pasado un tiempo. Es mas efectivo de esta forma porque el esp32 cuenta con mecanismos watchdog que podrian reiniciar la placa y que saliera del modo upload si activamos el modo un tiempo antes de la subida.
 
 También es importante evitar tocar los pines expuestos de l placa durante el proceso para no generar interferencias
