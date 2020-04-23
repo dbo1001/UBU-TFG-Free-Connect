@@ -1,0 +1,12 @@
+archivo->preferencias
+
+en el cuadro gestor de URLs añadir:
+https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+si existen mas, separarlas por ;
+
+Aplicamos los cambios y vamos a herramientas->placa->gestor de tarjetas
+
+Buscamos "esp32" e instalamos la tarjeta
+
+Ahora si nos aparece dentro de la lista de tarjetas posibles
