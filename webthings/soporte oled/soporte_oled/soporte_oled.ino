@@ -67,7 +67,7 @@ void setup(void) {
   ArduinoOTA.begin();
   
   //
-  adapter = new WebThingAdapter("Girasol", WiFi.localIP());
+  adapter = new WebThingAdapter(nombreWebthings, WiFi.localIP());
   Sensor.addProperty(&Propiedad1);
   adapter->addDevice(&Sensor);
   adapter->begin();
