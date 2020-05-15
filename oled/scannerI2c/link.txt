@@ -1,0 +1,5 @@
+https://playground.arduino.cc/Main/I2cScanner/
+
+https://forum.arduino.cc/index.php?topic=427607.0
+parece ser que arduino no se diseño para cambiar los pines i2c pero los esp 8266 y esp32 si pueden cambiarlo, aunque no lo pone en la documentacion wire.begin(sda,scl)
+la docu solo dice que si pones wire.begin(argumento) esa es la direccion i2c que usaras pero no dice nada de 2 argumentos
