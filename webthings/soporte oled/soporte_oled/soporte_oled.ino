@@ -5,30 +5,22 @@
 #include "utlgbotlib.h"
 #include "config.h"
 #include "funciones.h"
+#include "SSD1306Wire.h"//libreria para la pantalla
 
 WebThingAdapter *adapter;
 
-//WiFiClientSecure client;
-//UniversalTelegramBot Bot(bOTtoken, client);
 uTLGBot Bot(bOTtoken);
 const int debugLevelBot = 0;
 
-void setup(void) {
-  /**
-   * Espacio para inicializar pines de usuario
-   * 
-   * 
-   */
+SSD1306Wire display(0x3c, 5, 4);
 
-   
+void setup(void) {
   Serial.begin(115200);
   if(verboseOn){
-    // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
   }
-  // Set WiFi to station mode and disconnect from an AP if it was Previously
-  // connected
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -75,6 +67,9 @@ void setup(void) {
   //
   Bot.set_debug(debugLevelBot);
   Bot.getMe();
+
+  //
+  display.init();
 }
 
 void loop(void) {
