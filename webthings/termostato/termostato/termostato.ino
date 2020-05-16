@@ -54,6 +54,7 @@ void setup(void) {
   //
   adapter = new WebThingAdapter("Termostato", WiFi.localIP());
   Termostato.addProperty(&Temperatura);
+  Termostato.addProperty(&Humedad);
   adapter->addDevice(&Termostato);
   adapter->begin();
   //
@@ -75,9 +76,9 @@ void loop(void) {
   }
   if(tObjetivo>tMedida){
     calentar=true;
-    actualizarDatos();
+    //actualizarDatos();
   }else{
     calentar=false;
-    actualizarDatos();
+    //actualizarDatos();
   }
 }

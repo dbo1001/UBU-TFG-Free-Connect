@@ -10,8 +10,9 @@ const char passOTA[]= "admin";
 // variables globales de usuario
 //aquí pudes añadir las que necesites
 long t;
-float tObjetivo=22.2f;
-float tMedida=11.1f;
+float tObjetivo=0.0f;
+float tMedida=0.0f;
+float humedad=0.0f;
 boolean calentar=false;
 
 //habilita o deshabilita los mensajes de depuracion
@@ -22,6 +23,7 @@ WebThingAdapter *adapter;
 const char *capacidades[] = {"TemperatureSensor", nullptr};//lista de parametros que tiene el sensor, debe acabar en nullptr
 ThingDevice Termostato("termostato", "termostato", capacidades);//objeto dispositivo Nombre("","nombre en display",capacidades)
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
+ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, nullptr);
 
 
 //configuracion de la pantalla integrada
