@@ -1,17 +1,12 @@
-#include "Arduino.h"
-#include "Thing.h"
+//#include "Arduino.h"
+//#include "Thing.h"
 #include "WebThingAdapter.h"
 #include "ArduinoOTA.h"
 #include "utlgbotlib.h"
 #include "config.h"
 #include "funciones.h"
+//#include "SSD1306Wire.h" 
 
-WebThingAdapter *adapter;
-
-//WiFiClientSecure client;
-//UniversalTelegramBot Bot(bOTtoken, client);
-uTLGBot Bot(bOTtoken);
-const int debugLevelBot = 0;
 
 void setup(void) {   
   Serial.begin(115200);
@@ -69,6 +64,10 @@ void setup(void) {
   Bot.set_debug(debugLevelBot);
   Bot.getMe();
   t=millis();
+
+  //
+  display.init();
+  
 }
 
 void loop(void) {
@@ -77,5 +76,10 @@ void loop(void) {
   if(millis()>t+5000){
     leer();
     t=millis();
+  }
+  if(tObjetivo>tMedida){
+    calentar=true;
+  }else{
+    calentar=false;
   }
 }
