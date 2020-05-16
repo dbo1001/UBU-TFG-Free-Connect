@@ -1,4 +1,4 @@
-#include "SSD1306Wire.h"
+
 //credenciales del acceso a wifi
 const char *ssid = "delgado";
 const char *password = "micasa221b";
@@ -10,8 +10,8 @@ const char passOTA[]= "admin";
 // variables globales de usuario
 //aquí pudes añadir las que necesites
 long t;
-float tObjetivo=11;
-float tMedida=0;
+float tObjetivo=22.2f;
+float tMedida=11.1f;
 boolean calentar=false;
 
 

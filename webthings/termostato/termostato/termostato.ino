@@ -1,11 +1,13 @@
 //#include "Arduino.h"
 //#include "Thing.h"
+#include "SSD1306Wire.h"
 #include "WebThingAdapter.h"
 #include "ArduinoOTA.h"
 #include "utlgbotlib.h"
+//importante que estas sean las ultimas
 #include "config.h"
 #include "funciones.h"
-//#include "SSD1306Wire.h" 
+
 
 
 void setup(void) {   
