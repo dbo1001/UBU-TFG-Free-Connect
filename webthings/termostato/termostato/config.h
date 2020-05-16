@@ -14,7 +14,6 @@ float tObjetivo=22.2f;
 float tMedida=11.1f;
 boolean calentar=false;
 
-
 //habilita o deshabilita los mensajes de depuracion
 boolean verboseOn = true;
 
@@ -25,7 +24,11 @@ ThingDevice Termostato("termostato", "termostato", capacidades);//objeto disposi
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
 
 
-//pines utilizados en el bus i2c de la pantalla
+//configuracion de la pantalla integrada
 const int sdaOled=5;
 const int sclOled=4;
 SSD1306Wire display(0x3c, sdaOled, sclOled);
+
+//configuracion del sensor
+DHTesp dht;
+int dhtPin = 18;

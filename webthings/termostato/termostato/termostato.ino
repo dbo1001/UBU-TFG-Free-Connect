@@ -1,6 +1,7 @@
 #include "SSD1306Wire.h"
 #include "WebThingAdapter.h"
 #include "ArduinoOTA.h"
+#include "DHTesp.h"
 //importante que estas sean las ultimas
 #include "config.h"
 #include "funciones.h"
@@ -58,21 +59,25 @@ void setup(void) {
   //
   display.init();
 
+  //
+  dht.setup(dhtPin, DHTesp::DHT22);
 
-   //
+  //
   t=millis();
 }
 
 void loop(void) {
   ArduinoOTA.handle();
-  adapter->update();
   if(millis()>t+5000){
     leer();
+    actualizarDatos();
     t=millis();
   }
   if(tObjetivo>tMedida){
     calentar=true;
+    actualizarDatos();
   }else{
     calentar=false;
+    actualizarDatos();
   }
 }

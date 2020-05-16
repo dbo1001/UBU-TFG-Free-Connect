@@ -2,15 +2,13 @@
 //deberas llamarlas desde loop o setup
 void actualizarDatos();
 
-
 void leer(){
-  actualizarDatos();
+  
+  
 }
 
 void actualizarDatos(){
-  //ThingPropertyValue value;
-  //value.number = tMedida;
-//  Temperatura.setValue(value);
+
   char tempMed[5];
   char tempObj[5];
   dtostrf(tMedida,2,1,tempMed);
@@ -37,4 +35,8 @@ void actualizarDatos(){
     display.drawString(0, 30, "parado");    
   }
   display.display();
+  ThingPropertyValue value;
+  value.number = tMedida;
+  Temperatura.setValue(value);
+  adapter->update();
 }
