@@ -1,9 +1,6 @@
-//#include "Arduino.h"
-//#include "Thing.h"
 #include "SSD1306Wire.h"
 #include "WebThingAdapter.h"
 #include "ArduinoOTA.h"
-#include "utlgbotlib.h"
 //importante que estas sean las ultimas
 #include "config.h"
 #include "funciones.h"
@@ -13,12 +10,9 @@
 void setup(void) {   
   Serial.begin(115200);
   if(verboseOn){
-    // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
   }
-  // Set WiFi to station mode and disconnect from an AP if it was Previously
-  // connected
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -61,15 +55,12 @@ void setup(void) {
   Termostato.addProperty(&Temperatura);
   adapter->addDevice(&Termostato);
   adapter->begin();
-
-  //
-  Bot.set_debug(debugLevelBot);
-  Bot.getMe();
-  t=millis();
-
   //
   display.init();
-  
+
+
+   //
+  t=millis();
 }
 
 void loop(void) {

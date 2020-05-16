@@ -25,15 +25,6 @@ ThingDevice Termostato("termostato", "termostato", capacidades);//objeto disposi
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
 
 
-//configuracion para telegram
-const int debugLevelBot = 0;
-#define bOTtoken "914632211:AAG1Oe1_9EkHIOqVMQnuoV0X_oWsRoA9FR8"
-uTLGBot Bot(bOTtoken);
-const int numChats=1;
-const char chatID[]={"191552774"};
-const char* chatIDs[numChats]={chatID};
-
-
 //pines utilizados en el bus i2c de la pantalla
 const int sdaOled=5;
 const int sclOled=4;
