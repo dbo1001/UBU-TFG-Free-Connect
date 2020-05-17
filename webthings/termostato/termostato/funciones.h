@@ -75,11 +75,13 @@ void actualizarDatos(){
   }
   */
   display.display();
+  adapter->update();
+  tObjetivo=TemperaturaObj.getValue().number;
   ThingPropertyValue tempProp;
   ThingPropertyValue humProp;
   tempProp.number = tMedida;
   humProp.number = humedad;
   Temperatura.setValue(tempProp);
-  Humedad.setValue(humProp);
+  //Humedad.setValue(humProp);
   adapter->update();
 }

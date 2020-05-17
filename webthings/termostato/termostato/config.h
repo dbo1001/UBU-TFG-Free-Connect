@@ -20,10 +20,11 @@ boolean verboseOn = true;
 
 //configuración de los parametros para el display en el nodo central
 WebThingAdapter *adapter;
-const char *capacidades[] = {"TemperatureSensor", nullptr};//lista de parametros que tiene el sensor, debe acabar en nullptr
+const char *capacidades[] = {"Thermostat", nullptr};//lista de parametros que tiene el sensor, debe acabar en nullptr
 ThingDevice Termostato("termostato", "termostato", capacidades);//objeto dispositivo Nombre("","nombre en display",capacidades)
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
-ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, nullptr);
+ThingProperty TemperaturaObj("Temepratura objetivo", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//propiedad 2 del dispositivo
+//ThingProperty Humedad("Humedad %", "Lectura del sensor", NUMBER, nullptr);
 
 
 //configuracion de la pantalla integrada
