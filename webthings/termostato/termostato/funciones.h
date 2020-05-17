@@ -76,7 +76,17 @@ void actualizarDatos(){
   */
   display.display();
   adapter->update();
-  tObjetivo=TemperaturaObj.getValue().number;
+  float tObjNod=TemperaturaObj.getValue().number;
+  if (tObjetivo!=tObjNod){
+    if(tObjNod!=ultiTemp){
+        ultiTemp=tObjNod;
+        tObjetivo=tObjNod;
+    }else{
+      ThingPropertyValue nuevaTempObj;
+      nuevaTempObj.number=tObjetivo;
+      TemperaturaObj.setValue(nuevaTempObj);
+    }
+  }
   ThingPropertyValue tempProp;
   ThingPropertyValue humProp;
   tempProp.number = tMedida;

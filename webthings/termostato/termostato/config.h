@@ -14,6 +14,7 @@ float tObjetivo=0.0f;
 float tMedida=0.0f;
 float humedad=0.0f;
 boolean calentar=false;
+float ultiTemp=0;
 
 //habilita o deshabilita los mensajes de depuracion
 boolean verboseOn = true;
@@ -23,7 +24,7 @@ WebThingAdapter *adapter;
 const char *capacidades[] = {"Thermostat", nullptr};//lista de parametros que tiene el sensor, debe acabar en nullptr
 ThingDevice Termostato("termostato", "termostato", capacidades);//objeto dispositivo Nombre("","nombre en display",capacidades)
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
-ThingProperty TemperaturaObj("Temepratura objetivo", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//propiedad 2 del dispositivo
+ThingProperty TemperaturaObj("TemperaturaObj", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//propiedad 2 del dispositivo
 //ThingProperty Humedad("Humedad %", "Lectura del sensor", NUMBER, nullptr);
 
 

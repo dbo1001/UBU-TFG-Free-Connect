@@ -59,6 +59,7 @@ void setup(void) {
   //Humedad.unit = "percent";
   adapter->addDevice(&Termostato);
   adapter->begin();
+  ultiTemp=TemperaturaObj.getValue().number;
   //
   display.init();
 
