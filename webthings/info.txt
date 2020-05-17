@@ -1,0 +1,2 @@
+https://iot.mozilla.org/schemas/
+esta no es la especificacion para arduno pero es la unica que hay
