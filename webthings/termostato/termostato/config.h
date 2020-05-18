@@ -15,6 +15,10 @@ float tMedida=0.0f;
 float humedad=0.0f;
 boolean calentar=false;
 float ultiTemp=0;
+const int botonMas=15;
+const int botonMenos=2;
+bool subirT=false;
+bool bajarT=false;
 
 //habilita o deshabilita los mensajes de depuracion
 boolean verboseOn = true;

@@ -19,10 +19,7 @@ void actualizarDatos(){
   display.clear();
   if(verboseOn){
     Serial.println("...");
-    Serial.println(tempMed);
     Serial.println(tempObj);
-    Serial.println(tMedida);
-    Serial.println(tObjetivo);
   }
   display.drawString(0, 0, tempMed);
   //display.drawString(0, 0, "22.0");
@@ -94,4 +91,12 @@ void actualizarDatos(){
   Temperatura.setValue(tempProp);
   //Humedad.setValue(humProp);
   adapter->update();
+}
+
+void incrementaObjetivo(){
+  subirT=true;
+}
+
+void decrementaObjetivo(){
+  bajarT=true;
 }

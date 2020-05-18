@@ -65,7 +65,10 @@ void setup(void) {
 
   //
   dht.setup(dhtPin, DHTesp::DHT22);
-
+  
+  //
+  touchAttachInterrupt(botonMenos, decrementaObjetivo, 20);
+  touchAttachInterrupt(botonMas, incrementaObjetivo, 20);
   //
   t=millis();
 }
@@ -78,10 +81,26 @@ void loop(void) {
     t=millis();
   }
   if(tObjetivo>tMedida){
-    calentar=true;
-    //actualizarDatos();
+    if(!calentar){
+      calentar=true;  
+      actualizarDatos();
+    }
   }else{
-    calentar=false;
-    //actualizarDatos();
+    if(calentar){
+      calentar=false; 
+      actualizarDatos();
+    }
   }
+  if(subirT){
+    delay(10);
+    tObjetivo+=0.5;
+    subirT=false;
+    actualizarDatos();
+  }
+  if(bajarT){
+    tObjetivo-=0.5;
+    bajarT=false;
+    actualizarDatos();
+  }
+  
 }
