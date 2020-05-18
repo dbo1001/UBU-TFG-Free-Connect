@@ -92,7 +92,7 @@ void loop(void) {
     }
   }
   if(subirT){
-    delay(10);
+    //delay(10);
     tObjetivo+=0.5;
     subirT=false;
     actualizarDatos();
