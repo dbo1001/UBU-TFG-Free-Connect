@@ -9,19 +9,27 @@ const char passOTA[]= "admin";
 
 // variables globales de usuario
 //aquí pudes añadir las que necesites
+
+const int rele =16;
+
 long t;
+long instCambio=0;
+const long tRefresco=5000;
+const long tMinOn= 5000;
+const long tMinOff = 10000;
 float tObjetivo=0.0f;
 float tMedida=0.0f;
 float humedad=0.0f;
 boolean calentar=false;
 float ultiTemp=0;
 const int botonMas=15;
-const int botonMenos=2;
+const int botonMenos=13;
 bool subirT=false;
 bool bajarT=false;
 
+
 //habilita o deshabilita los mensajes de depuracion
-boolean verboseOn = true;
+boolean verboseOn = false;
 
 //configuración de los parametros para el display en el nodo central
 WebThingAdapter *adapter;

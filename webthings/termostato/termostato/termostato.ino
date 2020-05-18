@@ -70,25 +70,30 @@ void setup(void) {
   touchAttachInterrupt(botonMenos, decrementaObjetivo, 20);
   touchAttachInterrupt(botonMas, incrementaObjetivo, 20);
   //
+  pinMode(rele, OUTPUT);
   t=millis();
 }
 
 void loop(void) {
   ArduinoOTA.handle();
-  if(millis()>t+5000){
+  if(millis()>t+tRefresco){
     leer();
     actualizarDatos();
     t=millis();
   }
   if(tObjetivo>tMedida){
-    if(!calentar){
+    if(!calentar&&millis()>instCambio+tMinOff){
+      digitalWrite(rele, LOW);//logica inversa
       calentar=true;  
       actualizarDatos();
+      instCambio=millis();
     }
   }else{
-    if(calentar){
+    if(calentar&&millis()>instCambio+tMinOn){
+      digitalWrite(rele, HIGH);
       calentar=false; 
       actualizarDatos();
+      instCambio=millis();
     }
   }
   if(subirT){
