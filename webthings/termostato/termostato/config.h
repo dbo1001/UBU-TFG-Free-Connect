@@ -10,7 +10,8 @@ const char passOTA[]= "admin";
 // variables globales de usuario
 //aquí pudes añadir las que necesites
 
-const int rele =16;
+const int rele =17  ;
+const int led =16  ;
 
 long t;
 long instCambio=0;

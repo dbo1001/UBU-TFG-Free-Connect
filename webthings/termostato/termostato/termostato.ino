@@ -71,6 +71,9 @@ void setup(void) {
   touchAttachInterrupt(botonMas, incrementaObjetivo, 20);
   //
   pinMode(rele, OUTPUT);
+  digitalWrite(rele, LOW);
+  pinMode(led, OUTPUT);
+  digitalWrite(led, HIGH);
   t=millis();
 }
 
@@ -83,14 +86,16 @@ void loop(void) {
   }
   if(tObjetivo>tMedida){
     if(!calentar&&millis()>instCambio+tMinOff){
-      digitalWrite(rele, LOW);//logica inversa
+      digitalWrite(rele, HIGH);
+       digitalWrite(led, LOW);//logica inversa
       calentar=true;  
       actualizarDatos();
       instCambio=millis();
     }
   }else{
     if(calentar&&millis()>instCambio+tMinOn){
-      digitalWrite(rele, HIGH);
+      digitalWrite(rele, LOW);
+      digitalWrite(led, HIGH);
       calentar=false; 
       actualizarDatos();
       instCambio=millis();
