@@ -38,7 +38,7 @@ const char *capacidades[] = {"Thermostat", nullptr};//lista de parametros que ti
 ThingDevice Termostato("termostato", "termostato", capacidades);//objeto dispositivo Nombre("","nombre en display",capacidades)
 ThingProperty Temperatura("Temperatura", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
 ThingProperty TemperaturaObj("TemperaturaObj", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//propiedad 2 del dispositivo
-//ThingProperty Humedad("Humedad %", "Lectura del sensor", NUMBER, nullptr);
+ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, nullptr);
 
 
 //configuracion de la pantalla integrada

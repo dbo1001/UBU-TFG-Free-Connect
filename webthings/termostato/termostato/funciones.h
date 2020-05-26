@@ -84,7 +84,7 @@ void actualizarDatos(){
   tempProp.number = tMedida;
   humProp.number = humedad;
   Temperatura.setValue(tempProp);
-  //Humedad.setValue(humProp);
+  Humedad.setValue(humProp);
   adapter->update();
 }
 

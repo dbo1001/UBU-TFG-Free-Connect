@@ -53,10 +53,12 @@ void setup(void) {
   
   //
   adapter = new WebThingAdapter("Termostato", WiFi.localIP());
+  
+  Humedad.unit = "percent";
+  Termostato.addProperty(&Humedad);
   Termostato.addProperty(&Temperatura);
   Termostato.addProperty(&TemperaturaObj);
-  //Termostato.addProperty(&Humedad);
-  //Humedad.unit = "percent";
+  
   adapter->addDevice(&Termostato);
   adapter->begin();
   ultiTemp=TemperaturaObj.getValue().number;
