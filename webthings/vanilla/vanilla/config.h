@@ -30,6 +30,8 @@ ThingProperty Propiedad1("Propiedad1", "Lectura del sensor", NUMBER, "LevelPrope
 
 //telegram bot settings
 #define bOTtoken "yourToken"
+uTLGBot Bot(bOTtoken);
+const int debugLevelBot = 0;
 const int numChats=2; //we can specify to send the messages to more than one account
 //we specify here the chat ids we want the messages sent to
 const char chatID[]={"chatId1"};

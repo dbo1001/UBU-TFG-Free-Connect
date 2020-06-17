@@ -7,17 +7,9 @@
 #include "functions.h"
 
 
-uTLGBot Bot(bOTtoken);
-const int debugLevelBot = 0;
 
-void setup(void) {
-  /**
-   * add here any pinMode definitions
-   * all parameters are taken from config.h file. Any changes should be made there
-   * 
-   */
 
-   
+void setup(void) { 
   Serial.begin(115200);
 
   //wifi Setup
@@ -41,7 +33,7 @@ void setup(void) {
     Serial.println(WiFi.localIP());
   }
   
-  //Ota setup
+  //OTA setup
   ArduinoOTA.setHostname(nombreOTA);
   ArduinoOTA.setPassword(passOTA);
   ArduinoOTA.onStart([]() {
@@ -74,7 +66,12 @@ void setup(void) {
   //telegram bot settings
   Bot.set_debug(debugLevelBot);
   Bot.getMe();
-
+  
+/**
+   * Add here any pinMode definitions
+   * all parameters are taken from config.h file. Any changes should be made there
+   * 
+   */
  /**
    * If you wish to execute any code during setup
    * you shuold place the code in a function inside functions.h and call it here
