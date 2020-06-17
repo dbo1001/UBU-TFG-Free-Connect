@@ -82,7 +82,7 @@ void setup(void) {
 
 void loop(void) {
    /**
-   * add here any calls to your own functions
+   * Add here any calls to your own functions
    * it's very important to keep cumputing times as low as possible to mantain the systems vivacity
    * for timing control use the millis() method instead of delays
    * 
