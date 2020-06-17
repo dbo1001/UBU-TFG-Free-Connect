@@ -1,22 +1,25 @@
-#include "SSD1306Wire.h"
-#include "WebThingAdapter.h"
-#include "ArduinoOTA.h"
-#include "DHTesp.h"
-//importante que estas sean las ultimas
-#include "config.h"
-#include "funciones.h"
+#include "WebThingAdapter.h"//webthings main library
+#include "ArduinoOTA.h" // OTA functionality
 
+#include "SSD1306Wire.h"//oled display library
+#include "DHTesp.h"//temp and humidity sensor
+
+//it's important that this two are the last ones to be called. That way we ensure we can use in them any function from the ones above
+#include "config.h"
+#include "functions.h"
 
 
 void setup(void) {   
   Serial.begin(115200);
+  //wifi Setup
   if(verboseOn){
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
   }
+  // Set WiFi to station mode and disconnect from an AP if it was Previously
+  // connected
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED) {
     if(verboseOn)Serial.print(".");
     delay(500);
@@ -27,7 +30,8 @@ void setup(void) {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
   }
-  //
+  
+  //OTA setup
   ArduinoOTA.setHostname(nombreOTA);
   ArduinoOTA.setPassword(passOTA);
   ArduinoOTA.onStart([]() {
@@ -51,29 +55,27 @@ void setup(void) {
     });
   ArduinoOTA.begin();
   
-  //
-  adapter = new WebThingAdapter("Termostato", WiFi.localIP());
-  
-  Humedad.unit = "percent";
-  Termostato.addProperty(&Humedad);
-  Termostato.addProperty(&Temperatura);
-  Termostato.addProperty(&TemperaturaObj);
-  
-  adapter->addDevice(&Termostato);
+  //webthings setup
+  adapter = new WebThingAdapter("Thermostat", WiFi.localIP());
+  Thermostat.addProperty(&Temperature);
+  Thermostat.addProperty(&TemperatureObj);
+  adapter->addDevice(&Thermostat);
   adapter->begin();
-  ultiTemp=TemperaturaObj.getValue().number;
-  //
+  lastTemp=TemperatureObj.getValue().number;//get the set temperature
+  
+  //OLED settings  
   display.init();
 
-  //
+  //sensor settings
   dht.setup(dhtPin, DHTesp::DHT22);
   
+  //buttons settings
+  touchAttachInterrupt(minusButton, decrementObjective, 20);
+  touchAttachInterrupt(plusButton, incrementObjective, 20);
+  
   //
-  touchAttachInterrupt(botonMenos, decrementaObjetivo, 20);
-  touchAttachInterrupt(botonMas, incrementaObjetivo, 20);
-  //
-  pinMode(rele, OUTPUT);
-  digitalWrite(rele, LOW);
+  pinMode(heater, OUTPUT);
+  digitalWrite(heater, LOW);
   pinMode(led, OUTPUT);
   digitalWrite(led, HIGH);
   t=millis();
@@ -81,38 +83,37 @@ void setup(void) {
 
 void loop(void) {
   ArduinoOTA.handle();
-  if(millis()>t+tRefresco){
-    leer();
-    actualizarDatos();
+  //Moved adapter->update() function to one of the custom functions for better control on the sync
+  if(millis()>t+tRefresh){//refreshing function
+    readSensor();
+    updateData();
     t=millis();
   }
-  if(tObjetivo>tMedida){
-    if(!calentar&&millis()>instCambio+tMinOff){
-      digitalWrite(rele, HIGH);
-       digitalWrite(led, LOW);//logica inversa
-      calentar=true;  
-      actualizarDatos();
-      instCambio=millis();
+  if(tObjetive>tRead){//check if heating is needed
+    if(!heat&&millis()>tChange+tMinOff){
+      digitalWrite(heater, HIGH);
+       digitalWrite(led, LOW);
+      heat=true;  
+      updateData();
+      tChange=millis();
     }
   }else{
-    if(calentar&&millis()>instCambio+tMinOn){
-      digitalWrite(rele, LOW);
+    if(heat&&millis()>tChange+tMinOn){
+      digitalWrite(heater, LOW);
       digitalWrite(led, HIGH);
-      calentar=false; 
-      actualizarDatos();
-      instCambio=millis();
+      heat=false; 
+      updateData();
+      tChange=millis();
     }
   }
-  if(subirT){
-    //delay(10);
-    tObjetivo+=0.5;
-    subirT=false;
-    actualizarDatos();
+  if(addT){//plus button press
+    tObjetive+=0.5;
+    addT=false;
+    updateData();
   }
-  if(bajarT){
-    tObjetivo-=0.5;
-    bajarT=false;
-    actualizarDatos();
+  if(substractT){//minus button press
+    tObjetive-=0.5;
+    substractT=false;
+    updateData();
   }
-  
 }
