@@ -1,19 +1,18 @@
-#include "Arduino.h"
-#include "Thing.h"
-#include "WebThingAdapter.h"
-#include "QuickSortLib.h"
-#include "ArduinoOTA.h"
+#include "WebThingAdapter.h"//webthings main library
+#include "ArduinoOTA.h" // OTA functionality
+
+#include "QuickSortLib.h"//library for sorting operations
+
+//it's important that this two are the last ones to be called. That way we ensure we can use in them any function from the ones above
 #include "config.h"
-#include "funciones.h"
+#include "functions.h"
 
-
-
-WebThingAdapter *adapter;
 
 
 void setup(void) {
-  pinMode(ledPin, OUTPUT);
   Serial.begin(115200);
+  
+  //wifi Setup
   if(verboseOn){
     // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
@@ -23,26 +22,25 @@ void setup(void) {
   // connected
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED) {
     if(verboseOn)Serial.print(".");
     delay(500);
   }
-  pinMode(shumedad,INPUT);
-  pinMode(activarH,OUTPUT);
   if(verboseOn){
     Serial.println("");
     Serial.println("WiFi connected");
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
   }
+  
+  //OTA setup
   ArduinoOTA.setHostname(nombreOTA);
   ArduinoOTA.setPassword(passOTA);
   ArduinoOTA.onStart([]() {
       String type;
       if (ArduinoOTA.getCommand() == U_FLASH)
         type = "sketch";
-      else // U_SPIFFS
+      else 
         type = "filesystem";
       Serial.println("Start updating " + type);
     }).onEnd([]() {
@@ -58,33 +56,43 @@ void setup(void) {
       else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
   ArduinoOTA.begin();
-  
-  adapter = new WebThingAdapter("Girasol", WiFi.localIP());
-  Sensor.addProperty(&Humedad);
-  Sensor.addEvent(&Regar);
-  Sensor.addEvent(&Overheated);
+
+  //webthings setup
+  adapter = new WebThingAdapter(deviceName, WiFi.localIP());
+  Sensor.addProperty(&Humidity);
   adapter->addDevice(&Sensor);
   adapter->begin();
+  
+/**
+   * Add here any pinMode definitions
+   * all parameters are taken from config.h file. Any changes should be made there
+   * 
+   */
+ /**
+   * If you wish to execute any code during setup
+   * you shuold place the code in a function inside functions.h and call it here
+   * 
+   */
+  pinMode(humSensor,INPUT);
+  pinMode(activateSensor,OUTPUT);
 }
 
 void loop(void) {
+  /**
+   * Add here any calls to your own functions
+   * it's very important to keep cumputing times as low as possible to mantain the systems vivacity
+   * for timing control use the millis() method instead of delays
+   * 
+   */
   ArduinoOTA.handle();
-  if (millis()> tComprobacion + autoComp){
-    if(regar()){
-      if(!sonado){
-        //ThingDataValue val;
-        //val.boolean = true;
-        if(verboseOn)Serial.println("evento regar");
-        //ThingEventObject *ev = new ThingEventObject("Regar", BOOLEAN, val);
-        //Sensor.queueEventObject(ev);
-        ThingDataValue val;
-        val.number = 102;
-        ThingEventObject *ev = new ThingEventObject("overheated", NUMBER, val);
-        Sensor.queueEventObject(ev);
+  if (millis()> tCheck + autoComp){
+    if(water()){//reads the sensor and checks if the level is below threshold
+      if(!notified){
+        if(verboseOn)Serial.println("Watering needed");
       }
-      sonado=true;
+      notified=true;
     }
-    tComprobacion=millis();
+    tCheck=millis();
   }
   adapter->update();
 }
