@@ -22,8 +22,9 @@ void updateData(){
     Serial.println(tempObj);
   }
   display.drawString(0, 0, tempRead);
-  display.drawString(50, 0,"/");
-  display.drawString(70, 0, tempObj);
+  display.drawString(47, 0,"/");
+  display.drawString(55, 0, tempObj);
+  display.drawString(103, 0, "ºC");
   if(heat){
     display.drawString(0, 30, "on");    
   } else{
