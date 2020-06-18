@@ -1,5 +1,6 @@
 #include "WebThingAdapter.h"//webthings main library
 #include "ArduinoOTA.h" // OTA functionality
+#include "utlgbotlib.h" // telegram bot library
 
 #include "QuickSortLib.h"//library for sorting operations
 
@@ -64,6 +65,10 @@ void setup(void) {
   adapter->addDevice(&Sensor);
   adapter->begin();
   Humidity.unit= "percent";
+
+  //telegram bot settings
+  Bot.set_debug(debugLevelBot);
+  Bot.getMe();
   
 /**
    * Add here any pinMode definitions
@@ -95,6 +100,9 @@ void loop(void) {
         value.boolean = true;
         ThingEventObject *ev = new ThingEventObject("NeedWater", BOOLEAN, value);
         Sensor.queueEventObject(ev);
+        for (int i=0; i<numChats; i++) {
+          Bot.sendMessage(chatIDs[i], "Water the plant");
+        }
       }
       notified=true;
     }

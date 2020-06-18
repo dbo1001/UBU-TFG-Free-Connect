@@ -35,3 +35,13 @@ const char *capacidades[] = {"MultiLevelSensor", nullptr};//list of functionalit
 ThingDevice Sensor("humedad1", "girasol", capacidades);//one device on our project
 ThingProperty Humidity("Humidity", "dryness level", NUMBER, "LevelProperty");//define each property of the device
 ThingEvent NeedWater("Not enough moisture","Need to water",BOOLEAN, "AlarmEvent");
+
+//telegram bot settings
+#define bOTtoken "914632211:AAG1Oe1_9EkHIOqVMQnuoV0X_oWsRoA9FR8"
+uTLGBot Bot(bOTtoken);
+const int debugLevelBot = 0;
+const int numChats=2; //we can specify to send the messages to more than one account
+//we specify here the chat ids we want the messages sent to
+const char chatID[]={"191552774"};
+const char chatID2[]={"191552774"};
+const char *chatIDs[numChats]={chatID,chatID2};
