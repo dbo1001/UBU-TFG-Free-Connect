@@ -16,12 +16,11 @@ const int humSensor = 33;//location of sensor reading pin
 const int activateSensor = 18;//location of activation signal
 
 boolean notified = false;//to not notify multiple times
-boolean waterFlag=false;//to keep track if watering is needed
 
 int limWater=80;//threshold to notify the need of watering (0-100)
 const int times=50;//numer of measurements to average
 
-const int autoComp=10000; //1h checking time interval
+const int autoComp=3600000; //1h checking time interval
 long tCheck=-autoComp;//last checked time. Initializes to always chack on startup
 
 //enables/disables debug messages. Should be turned off for the final deployment.

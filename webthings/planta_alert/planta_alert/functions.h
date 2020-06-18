@@ -27,12 +27,5 @@ int readSensor(){
 }
 
 boolean water(){
-  if(readSensor()>limWater){
-    if(waterFlag){
-      waterFlag=false;
-      return true;  
-    }
-    waterFlag=true;
-  }
-  return false;
+  return readSensor()>limWater;
 }

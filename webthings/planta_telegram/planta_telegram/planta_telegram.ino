@@ -105,6 +105,8 @@ void loop(void) {
         }
       }
       notified=true;
+    }else{
+      notified=false;
     }
     tCheck=millis();
   }

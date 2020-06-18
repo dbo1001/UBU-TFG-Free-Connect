@@ -97,6 +97,8 @@ void loop(void) {
         Sensor.queueEventObject(ev);
       }
       notified=true;
+    }else{
+      notified=false;
     }
     tCheck=millis();
   }

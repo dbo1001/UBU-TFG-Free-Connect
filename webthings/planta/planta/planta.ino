@@ -91,6 +91,8 @@ void loop(void) {
         if(verboseOn)Serial.println("Watering needed");
       }
       notified=true;
+    }else{
+      notified=false;
     }
     tCheck=millis();
   }
