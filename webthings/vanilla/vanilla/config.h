@@ -24,7 +24,7 @@ boolean verboseOn = true;
 const char deviceName[] ="deviceName";
 WebThingAdapter *adapter;//main objet we will use
 const char *capacidades[] = {"MultiLevelSensor", nullptr};//list of functionality categories
-ThingDevice Sensor("humedad1", "girasol", capacidades);//one device on our 
+ThingDevice Sensor("humedad1", "girasol", capacidades);//one device on our project
 ThingProperty Propiedad1("Propiedad1", "Lectura del sensor", NUMBER, "LevelProperty");//define each property of the device
 
 

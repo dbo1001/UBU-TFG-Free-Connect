@@ -33,16 +33,18 @@ bool addT=false;//flags for the interrupts associated with the buttons
 bool substractT=false;
 
 
-//habilita o deshabilita los mensajes de depuracion
+//enables/disables debug messages. Should be turned off for the final deployment.
+//adding your own messages is as easy as including: if(verboseOn)Serial.print("My debug message");
 boolean verboseOn = false;
 
-//configuración de los parametros para el display en el nodo central
-WebThingAdapter *adapter;
-const char *capacidades[] = {"Thermostat",nullptr};//lista de parametros que tiene el sensor, debe acabar en nullptr
-ThingDevice Thermostat("termostato", "termostato", capacidades);//objeto dispositivo Nombre("","nombre en display",capacidades)
-ThingProperty Temperature("Temperature", "Lectura del sensor", NUMBER, "TemperatureProperty");//propiedad 1 del dispositivo
-ThingProperty TemperatureObj("TemperatureObj", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//propiedad 2 del dispositivo
-ThingProperty Humedad("Humedad", "Lectura del sensor", NUMBER, "LevelProperty");
+//parameters for the connection with the main module. Please check the manual for a complete reference on these
+const char deviceName[] ="termostato";
+WebThingAdapter *adapter;//main objet we will use
+const char *capacidades[] = {"Thermostat",nullptr};//list of functionality categories
+ThingDevice Thermostat("termostato", "termostato", capacidades);//one device on our project
+ThingProperty Temperature("Temperature", "Lectura del sensor", NUMBER, "TemperatureProperty");//define property 1 of the device
+ThingProperty TemperatureObj("TemperatureObj", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//define property 2 of the device
+
 
 
 //configuracion de la pantalla integrada

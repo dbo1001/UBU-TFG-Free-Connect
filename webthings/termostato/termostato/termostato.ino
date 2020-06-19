@@ -56,7 +56,7 @@ void setup(void) {
   ArduinoOTA.begin();
   
   //webthings setup
-  adapter = new WebThingAdapter("Thermostat", WiFi.localIP());
+  adapter = new WebThingAdapter(deviceName, WiFi.localIP());
   Thermostat.addProperty(&Temperature);
   Thermostat.addProperty(&TemperatureObj);
   adapter->addDevice(&Thermostat);
