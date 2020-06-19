@@ -47,10 +47,10 @@ ThingProperty TemperatureObj("TemperatureObj", "Temepratura objetivo", NUMBER, "
 
 
 
-//configuracion de la pantalla integrada
+//screen parameters
 const int sdaOled=5;
 const int sclOled=4;
 SSD1306Wire display(0x3c, sdaOled, sclOled);
 
-//configuracion del sensor
+//sensor setup
 DHTesp dht;
