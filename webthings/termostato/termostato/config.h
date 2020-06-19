@@ -40,8 +40,8 @@ boolean verboseOn = false;
 //parameters for the connection with the main module. Please check the manual for a complete reference on these
 const char deviceName[] ="termostato";
 WebThingAdapter *adapter;//main objet we will use
-const char *capacidades[] = {"Thermostat",nullptr};//list of functionality categories
-ThingDevice Thermostat("termostato", "termostato", capacidades);//one device on our project
+const char *capabilities[] = {"Thermostat",nullptr};//list of functionality categories
+ThingDevice Thermostat("termostato", "termostato", capabilities);//one device on our project
 ThingProperty Temperature("Temperature", "Lectura del sensor", NUMBER, "TemperatureProperty");//define property 1 of the device
 ThingProperty TemperatureObj("TemperatureObj", "Temepratura objetivo", NUMBER, "TargetTemperatureProperty");//define property 2 of the device
 
