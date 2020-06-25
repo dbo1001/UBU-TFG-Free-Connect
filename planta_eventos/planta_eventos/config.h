@@ -1,9 +1,9 @@
 //wifi credentials. They sould match your network's
-const char *ssid = "delgado";
-const char *password = "micasa221b";
+const char *ssid = "wifi";
+const char *password = "pass";
 
 //OTA credentials. we define those here
-const char nombreOTA[]= "esp32pruebas";
+const char nombreOTA[]= "planta";
 const char passOTA[]= "admin";
 
  /**

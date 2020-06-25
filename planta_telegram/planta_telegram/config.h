@@ -1,9 +1,9 @@
 //wifi credentials. They sould match your network's
-const char *ssid = "delgado";
-const char *password = "micasa221b";
+const char *ssid = "wifi";
+const char *password = "pass";
 
 //OTA credentials. we define those here
-const char nombreOTA[]= "esp32pruebas";
+const char nombreOTA[]= "planta";
 const char passOTA[]= "admin";
 
  /**
@@ -36,11 +36,11 @@ ThingProperty Humidity("Humidity", "dryness level", NUMBER, "LevelProperty");//d
 ThingEvent NeedWater("Not enough moisture","Need to water",BOOLEAN, "AlarmEvent");
 
 //telegram bot settings
-#define bOTtoken "914632211:AAG1Oe1_9EkHIOqVMQnuoV0X_oWsRoA9FR8"
+#define bOTtoken "token"
 uTLGBot Bot(bOTtoken);
 const int debugLevelBot = 0;
 const int numChats=2; //we can specify to send the messages to more than one account
 //we specify here the chat ids we want the messages sent to
-const char chatID[]={"191552774"};
-const char chatID2[]={"191552774"};
+const char chatID[]={"chat"};
+const char chatID2[]={"chat"};
 const char *chatIDs[numChats]={chatID,chatID2};

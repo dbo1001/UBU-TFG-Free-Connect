@@ -1,6 +1,6 @@
 //wifi credentials. They sould match your network's
-const char *ssid = "name";
-const char *password = "pssword";
+const char *ssid = "wifi";
+const char *password = "pass";
 
 //OTA credentials. we define those here
 const char nombreOTA[]= "awesomeModule";
@@ -29,7 +29,7 @@ ThingProperty Propiedad1("Propiedad1", "readings", NUMBER, "LevelProperty");//de
 
 
 //telegram bot settings
-#define bOTtoken "yourToken"
+#define bOTtoken "token"
 uTLGBot Bot(bOTtoken);
 const int debugLevelBot = 0;
 const int numChats=2; //we can specify to send the messages to more than one account
