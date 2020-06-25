@@ -1,29 +1,30 @@
-#include "Arduino.h"
-#include "Thing.h"
-#include "WebThingAdapter.h"
-#include "ArduinoOTA.h"
-#include "utlgbotlib.h"
+#include "WebThingAdapter.h"//webthings main library
+#include "ArduinoOTA.h" // OTA functionality
+#include "utlgbotlib.h" // telegram bot library
+
+#include "SSD1306Wire.h" //screen library
+
+
+//it's important that this two are the last ones to be called. That way we ensure we can use in them any function from the ones above
 #include "config.h"
 #include "funciones.h"
-#include "SSD1306Wire.h"//libreria para la pantalla
 
-WebThingAdapter *adapter;
 
-uTLGBot Bot(bOTtoken);
-const int debugLevelBot = 0;
 
-SSD1306Wire display(0x3c, 5, 4);
 
 void setup(void) {
   Serial.begin(115200);
+
+  //wifi Setup
   if(verboseOn){
+    // Attempt to connect to Wifi network:
     Serial.print("Connecting Wifi: ");
     Serial.println(ssid);
   }
-
+  // Set WiFi to station mode and disconnect from an AP if it was Previously
+  // connected
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED) {
     if(verboseOn)Serial.print(".");
     delay(500);
@@ -34,14 +35,15 @@ void setup(void) {
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
   }
-  //
+  
+  //OTA setup
   ArduinoOTA.setHostname(nombreOTA);
   ArduinoOTA.setPassword(passOTA);
   ArduinoOTA.onStart([]() {
       String type;
       if (ArduinoOTA.getCommand() == U_FLASH)
         type = "sketch";
-      else // U_SPIFFS
+      else 
         type = "filesystem";
       Serial.println("Start updating " + type);
     }).onEnd([]() {
@@ -58,21 +60,42 @@ void setup(void) {
     });
   ArduinoOTA.begin();
   
-  //
-  adapter = new WebThingAdapter(nombreWebthings, WiFi.localIP());
+  //webthings setup
+  adapter = new WebThingAdapter(deviceName, WiFi.localIP());
   Sensor.addProperty(&Propiedad1);
   adapter->addDevice(&Sensor);
   adapter->begin();
 
-  //
+  //telegram bot settings
   Bot.set_debug(debugLevelBot);
   Bot.getMe();
 
-  //
+
+  //display initialization
   display.init();
+  
+/**
+   * Add here any pinMode definitions
+   * all parameters are taken from config.h file. Any changes should be made there
+   * 
+   */
+ /**
+   * If you wish to execute any code during setup
+   * you shuold place the code in a function inside functions.h and call it here
+   * 
+   */
+  
+
+  
 }
 
 void loop(void) {
+   /**
+   * Add here any calls to your own functions
+   * it's very important to keep cumputing times as low as possible to mantain the systems vivacity
+   * for timing control use the millis() method instead of delays
+   * 
+   */
   ArduinoOTA.handle();
   adapter->update();
 }

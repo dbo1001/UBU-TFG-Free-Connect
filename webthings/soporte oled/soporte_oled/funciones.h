@@ -1,2 +1,2 @@
-/* aquí puedes añadir las funciones que tu código necesite*/
-//deberas llamarlas desde loop o setup
+/* place here any additional functions to use in your code*/
+//they should be called from loop or setup
