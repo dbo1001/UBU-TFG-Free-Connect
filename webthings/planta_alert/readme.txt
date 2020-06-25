@@ -1,1 +1,0 @@
-Aprovechando el software libre de mozilla para iot, voy a convertir uno de los sensores que ya estane n funcionamiento para que sea compatible

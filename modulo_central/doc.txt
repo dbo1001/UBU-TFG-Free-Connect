@@ -1,2 +1,0 @@
-Este es el elemento central
-Se encarga de gestionar todas las comunicaciones con los sensores y de proporcionar la interfaz de usiario
