@@ -1,0 +1,2 @@
+Escáner I2C.
+Arduino Forum
