@@ -20,12 +20,12 @@ const char passOTA[]= "admin";
 //adding your own messages is as easy as including: if(verboseOn)Serial.print("My debug message");
 boolean verboseOn = true;
 
-//parameters for the connection with the main module. Please check the manual for a complete reference on these
+//parameters for the connection with the main node. Please check the manual for a complete reference on these
 const char deviceName[] ="deviceName";
 WebThingAdapter *adapter;//main objet we will use
 const char *capacidades[] = {"MultiLevelSensor", nullptr};//list of functionality categories
 ThingDevice Sensor("humedad1", "girasol", capacidades);//one device on our project
-ThingProperty Propiedad1("Propiedad1", "Lectura del sensor", NUMBER, "LevelProperty");//define each property of the device
+ThingProperty Propiedad1("Propiedad1", "readings", NUMBER, "LevelProperty");//define each property of the device
 
 
 //telegram bot settings

@@ -58,6 +58,7 @@ void setup(void) {
   //webthings setup
   adapter = new WebThingAdapter(deviceName, WiFi.localIP());
   Thermostat.addProperty(&Temperature);
+    
   Thermostat.addProperty(&TemperatureObj);
   adapter->addDevice(&Thermostat);
   adapter->begin();
