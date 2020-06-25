@@ -28,3 +28,8 @@ void sendMessagege(){
        Bot.sendMessage(chatIDs[i], "Intrusion detected");
   }
 }
+
+boolean checkStatus(){
+  adapter->update();
+  return Activado.getValue().boolean;
+}

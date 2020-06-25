@@ -60,6 +60,7 @@ void setup(void) {
   //webthings setup
   adapter = new WebThingAdapter(deviceName, WiFi.localIP());
   Sensor.addProperty(&Detectado);
+  Sensor.addProperty(&Activado);
   adapter->addDevice(&Sensor);
   Sensor.addEvent(&DeteccionEvento);
   adapter->begin();
@@ -91,21 +92,26 @@ void loop(void) {
    * for timing control use the millis() method instead of delays
    * 
    */
-  if(detectionCount>0&&millis()>t+tReset){
-    detectionCount=0;
-  }
-  if(!triggered&&numDetections==detectionCount){
-    triggerAlarm();
-  }
-  if(triggered&&millis()>tLastMessage+tMessages){
-    sendMessagege();
-  }
-  if(triggered&&millis()>tTriggered+tRinging){
+  if(active){ 
+    if(detectionCount>0&&millis()>t+tReset){
+      detectionCount=0;
+    }
+    if(!triggered&&numDetections==detectionCount){
+      triggerAlarm();
+    }
+    if(triggered&&millis()>tLastMessage+tMessages){
+      sendMessagege();
+    }
+    if(triggered&&millis()>tTriggered+tRinging){
+      triggered=false;
+      detectionCount=0;
+      digitalWrite(led,LOW);
+    }
+  }else{
     triggered=false;
-    detectionCount=0;
-    digitalWrite(led,LOW);
   }
-  
+
+  active=checkStatus();
   ArduinoOTA.handle();
   adapter->update();
 }
