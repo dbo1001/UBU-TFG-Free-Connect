@@ -59,7 +59,7 @@ void setup(void) {
   
   //webthings setup
   adapter = new WebThingAdapter(deviceName, WiFi.localIP());
-  Sensor.addProperty(&Propiedad1);
+  Sensor.addProperty(&Property1);
   adapter->addDevice(&Sensor);
   adapter->begin();
 

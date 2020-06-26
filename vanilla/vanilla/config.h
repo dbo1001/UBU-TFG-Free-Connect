@@ -23,9 +23,9 @@ boolean verboseOn = true;
 //parameters for the connection with the main node. Please check the manual for a complete reference on these
 const char deviceName[] ="deviceName";
 WebThingAdapter *adapter;//main objet we will use
-const char *capacidades[] = {"MultiLevelSensor", nullptr};//list of functionality categories
-ThingDevice Sensor("humedad1", "girasol", capacidades);//one device on our project
-ThingProperty Propiedad1("Propiedad1", "readings", NUMBER, "LevelProperty");//define each property of the device
+const char *funcionalities[] = {"MultiLevelSensor", nullptr};//list of functionality categories
+ThingDevice Sensor("name", "description", funcionalities);//one device on our project
+ThingProperty Property1("name", "description", NUMBER, "LevelProperty");//define each property of the device
 
 
 //telegram bot settings
