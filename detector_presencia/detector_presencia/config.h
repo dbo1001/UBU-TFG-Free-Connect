@@ -14,13 +14,13 @@ const char passOTA[]= "admin";
    */
 const int pir=26;//pin configuration
 const int led=2;
+const int siren=4;
+
+boolean active=false;
+boolean triggered=false;
 
 const int numDetections=2;//required numbre of detections to go off
 int detectionCount=0;
-
-boolean active=false;
-
-boolean triggered=false;
 
 long t=0;//time instant
 const long tReset = 10000;//time to consider the detection was a false positive
@@ -38,9 +38,9 @@ const char deviceName[] ="alarm";
 WebThingAdapter *adapter;//main objet we will use
 const char *capacidades[] = {"Alarm", nullptr};//list of functionality categories
 ThingDevice Sensor("alarma", "detector presencia", capacidades);//one device on our project
-ThingProperty Detectado("detectado", "persona detectada", BOOLEAN, "AlarmProperty");//define each property of the device
-ThingProperty Activado("activado", "alarma ready", BOOLEAN, "BooleanProperty");//define each property of the device
-ThingEvent DeteccionEvento("persona","detectada",BOOLEAN, "AlarmEvent");
+ThingProperty Detected("detectado", "persona detectada", BOOLEAN, "AlarmProperty");//define each property of the device
+ThingProperty Active("activado", "alarma ready", BOOLEAN, "BooleanProperty");//define each property of the device
+ThingEvent DetectionEvent("persona","detectada",BOOLEAN, "AlarmEvent");
 
 //telegram bot settings
 #define bOTtoken "token"

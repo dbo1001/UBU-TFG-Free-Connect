@@ -59,10 +59,10 @@ void setup(void) {
   
   //webthings setup
   adapter = new WebThingAdapter(deviceName, WiFi.localIP());
-  Sensor.addProperty(&Detectado);
-  Sensor.addProperty(&Activado);
+  Sensor.addProperty(&Detected);
+  Sensor.addProperty(&Active);
   adapter->addDevice(&Sensor);
-  Sensor.addEvent(&DeteccionEvento);
+  Sensor.addEvent(&DetectionEvent);
   adapter->begin();
 
   //telegram bot settings
@@ -76,13 +76,14 @@ void setup(void) {
    */
    pinMode(pir, INPUT);
    pinMode(led, OUTPUT);
+   pinMode(siren, OUTPUT);
+   digitalWrite(siren, LOW);
    attachInterrupt(digitalPinToInterrupt(pir), alerta, RISING);
  /**
    * If you wish to execute any code during setup
    * you shuold place the code in a function inside functions.h and call it here
    * 
    */
-   t=millis();
 }
 
 void loop(void) {
@@ -92,26 +93,24 @@ void loop(void) {
    * for timing control use the millis() method instead of delays
    * 
    */
-  if(active){ 
-    if(detectionCount>0&&millis()>t+tReset){
+  if(active){ //if alarm is armed
+    if(detectionCount>0&&millis()>t+tReset){//some detections were made but reset time was reached (false positive)
       detectionCount=0;
     }
-    if(!triggered&&numDetections==detectionCount){
+    if(!triggered&&numDetections==detectionCount){//detections threshold reached
       triggerAlarm();
     }
-    if(triggered&&millis()>tLastMessage+tMessages){
+    if(triggered&&millis()>tLastMessage+tMessages){//it's time to send another message
       sendMessagege();
     }
-    if(triggered&&millis()>tTriggered+tRinging){
-      triggered=false;
-      detectionCount=0;
-      digitalWrite(led,LOW);
+    if(triggered&&millis()>tTriggered+tRinging){//alarm has rung for long enough
+     untriggerAlarm();
     }
   }else{
-    triggered=false;
+    untriggerAlarm();
   }
 
+  adapter->update();
   active=checkStatus();
   ArduinoOTA.handle();
-  adapter->update();
 }

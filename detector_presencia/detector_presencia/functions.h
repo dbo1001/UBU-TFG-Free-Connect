@@ -13,14 +13,26 @@ void alerta(){
 void triggerAlarm(){
   triggered=true;
   tTriggered=millis();
+  digitalWrite(led,HIGH);
+  digitalWrite(siren,HIGH);
   ThingPropertyValue value;
   value.boolean = true;
-  Detectado.setValue(value);
-  ThingEventObject *ev = new ThingEventObject("DeteccionEvento", BOOLEAN, value);
+  Detected.setValue(value);
+  ThingEventObject *ev = new ThingEventObject("DetectionEvent", BOOLEAN, value);
   Sensor.queueEventObject(ev);
-  digitalWrite(led,HIGH);
 }
 
+void untriggerAlarm(){
+   triggered=false;
+   detectionCount=0;
+   digitalWrite(led,LOW);
+   digitalWrite(siren,LOW);
+   if(Detected.getValue().boolean==true){
+    ThingPropertyValue value;
+    value.boolean = false;
+    Detected.setValue(value);
+   }
+}
 
 void sendMessagege(){
   tLastMessage=millis();
@@ -31,5 +43,5 @@ void sendMessagege(){
 
 boolean checkStatus(){
   adapter->update();
-  return Activado.getValue().boolean;
+  return Active.getValue().boolean;
 }
