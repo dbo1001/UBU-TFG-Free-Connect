@@ -62,6 +62,7 @@ void setup(void) {
   Sensor.addProperty(&Humidity);
   adapter->addDevice(&Sensor);
   adapter->begin();
+  Humidity.unit= "percent";
   
 /**
    * Add here any pinMode definitions

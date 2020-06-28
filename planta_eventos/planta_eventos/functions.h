@@ -5,7 +5,6 @@
 int readSensor(){
   int  readings[times];
   digitalWrite(activateSensor,HIGH);
-  delay(500);
   for(int i=0;i<times;i++){
     readings[i]=analogRead(humSensor);
     delay(10);

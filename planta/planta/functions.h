@@ -5,10 +5,8 @@
 int readSensor(){
   int  readings[times];
   digitalWrite(activateSensor,HIGH);
-  delay(500);
   for(int i=0;i<times;i++){
     readings[i]=analogRead(humSensor);
-    delay(10);
   }
   digitalWrite(activateSensor,LOW);
   QuickSort<int>::SortAscending(readings, 0, times-1);
