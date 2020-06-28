@@ -1,2 +1,6 @@
 # Free-Connect
-Toolkit de ayuda para la interconexión de sensores inalambricos. Facilitar la interconexión de sensores basados en placas Arduino(ESP32) con elementos de control y visualización,basado en mozilla webthings, centralizados que integren la interfaz de usuario. Los sensores y actuadores serán módulos que el usuario pueda combinar fácilmente. 
+Toolkit de ayuda para la interconexión de sensores inalambricos. Facilitar la creación de proytectos IoT.
+
+Su interfaz y funcionamiento se basa en Mozilla Bebthings, y también integra conectividad mediante Telegram.
+
+Página web del proyecto: https://freeconnectproject.com 
