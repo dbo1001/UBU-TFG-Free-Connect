@@ -1,3 +1,12 @@
+/**
+ * Code for the "thermostat" example. Provides funcionality of a IoT heating system.
+ * Complete information can be found at projects website.
+ * Author: Daniel Delgado Santamaría
+ * Project: https://freeconnectproject.com
+ * License is GPL 3.0
+ * 
+ */
+
 #include "WebThingAdapter.h"//webthings main library
 #include "ArduinoOTA.h" // OTA functionality
 

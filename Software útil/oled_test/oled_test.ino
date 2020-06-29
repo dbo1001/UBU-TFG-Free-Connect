@@ -1,3 +1,12 @@
+/**
+ * Simple piece of code to check your OLED settings
+ * Complete information can be found at projects website.
+ * Author: Daniel Delgado Santamaría
+ * Project: https://freeconnectproject.com
+ * License is GPL 3.0
+ * 
+ */
+
 #include "SSD1306Wire.h" 
 
 

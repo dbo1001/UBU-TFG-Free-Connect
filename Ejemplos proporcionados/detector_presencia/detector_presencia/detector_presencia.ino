@@ -1,3 +1,11 @@
+/**
+ * Node example with funtionality for an alarm system. 
+ * Full details at projects page
+ * Author: Daniel Delgado Santamaría
+ * Project: https://freeconnectproject.com
+ * License is GPL 3.0
+ * 
+ */
 #include "WebThingAdapter.h"//webthings main library
 #include "ArduinoOTA.h" // OTA functionality
 #include "utlgbotlib.h" // telegram bot library

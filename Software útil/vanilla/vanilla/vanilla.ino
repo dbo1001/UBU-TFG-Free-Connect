@@ -1,3 +1,11 @@
+/**
+ * Basic example of the proposed program strucure. 
+ * It does not contain any funcionality, can be used as foundation to build your code.
+ * Author: Daniel Delgado Santamaría
+ * Project: https://freeconnectproject.com
+ * License is GPL 3.0
+ * 
+ */
 #include "WebThingAdapter.h"//webthings main library
 #include "ArduinoOTA.h" // OTA functionality
 #include "utlgbotlib.h" // telegram bot library

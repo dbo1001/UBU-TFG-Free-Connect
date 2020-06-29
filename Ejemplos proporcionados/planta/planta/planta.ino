@@ -1,3 +1,12 @@
+/**
+ * Code 1/3 for example "plant water lever monitor"
+ * Complete information can be found at projects website.
+ * Author: Daniel Delgado Santamaría
+ * Project: https://freeconnectproject.com
+ * License is GPL 3.0
+ * 
+ */
+
 #include "WebThingAdapter.h"//webthings main library
 #include "ArduinoOTA.h" // OTA functionality
 
